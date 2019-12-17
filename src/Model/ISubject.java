@@ -1,9 +1,9 @@
 package Model;
 
-import Controller.IObserver;
+import Controller.Observer;
 
 public interface ISubject {
-    void Notify();
-    void Attach(IObserver observer);
-    void Detach(IObserver observer);
+    void attach(Observer o);
+    void detach(Observer o);
+    void notify1();
 }

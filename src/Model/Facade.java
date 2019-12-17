@@ -1,45 +1,42 @@
 package Model;
 
-import Controller.IObserver;
+import Controller.Observer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Facade implements ISubject {
-    Car car;
-    ArrayList<IObserver> observer;
-    ArrayList<Car> carList;
+    List<Observer> observers;
+    List<Car> carList;
 
-    public void addCar(String name, double price){
+    public Facade() {
+        this.carList = new ArrayList<>();
+        this.observers = new ArrayList<>();
+    }
+
+    public void addCar(String name, double price) {
         this.carList.add(new Car(name, price));
-        Notify();
+        notify1();
     }
 
-    public ArrayList showAvailableCars(){
-        return carList;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
+    public List<Car> getCar() {
+        return this.carList;
     }
 
     @Override
-    public void Notify() {
-        this.observer.forEach(printUpdate -> {
-            printUpdate.update();
-        } );
+    public void attach(Observer o) {
+        observers.add(o);
     }
 
     @Override
-    public void Attach(IObserver observer) {
-        this.observer.add(observer);
+    public void detach(Observer o) {
+        observers.remove(o);
     }
 
     @Override
-    public void Detach(IObserver observer) {
-        this.observer.remove(observer);
+    public void notify1() {
+        for(Observer o: observers) {
+            o.update();
+        }
     }
 }
