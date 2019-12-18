@@ -5,12 +5,14 @@ import Model.Facade;
 import View.View;
 
 public class Controller implements Observer {
-    View view;
-    Facade facade = new Facade();
-    int index = 0;
+
+    private View view;
+    private Facade facade = new Facade();
+
     public Controller(View view) {
         facade.attach(this);
         this.view = view;
+
     }
 
     public void addCar(String modell, double price) {
@@ -18,15 +20,17 @@ public class Controller implements Observer {
     }
 
     public void getCars() {
+
+        if(facade.getCar().size() == 0) {
+            view.printInfo(null);
+        }
         for(Car c: facade.getCar()) {
-            System.out.println(c.getModell());
-            System.out.println(c.getPrice());
+            view.printCars(c.getModell(), c.getPrice());
         }
     }
 
     @Override
     public void update() {
-        System.out.println("La till bilen " + facade.getCar().get(index).getModell() + " i listan");
-        index++;
+        view.printInfo(facade.getCar().get(facade.getCar().size() - 1).getModell());
     }
 }

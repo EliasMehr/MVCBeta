@@ -12,6 +12,7 @@ public class View {
 
             Scanner sc = new Scanner(System.in);
             String input = "";
+            System.out.println("Vill du skapa en bil eller visa alla bilar?");
             System.out.println("(skapa) eller (visa)");
             double price;
             input = sc.nextLine();
@@ -21,22 +22,35 @@ public class View {
                 case "skapa":
                     System.out.print("Ange modell och pris: ");
                     input = sc.next();
-                    price = sc.nextDouble();
-                    System.out.println("Bil skapad");
-                    controller.addCar(input, price);
+                    if(sc.hasNextDouble()) {
+                        price = sc.nextDouble();
+                        controller.addCar(input, price);
+                    }
+                    else {
+                        System.out.println("Ange priset med siffror!");
+                    }
+
                     break;
 
                 case "visa":
                     controller.getCars();
                     break;
 
-                default:
-                    System.out.println("im here");
-
             }
         }
     }
-    public void printShit(String msg) {
-        System.out.println(msg);
+
+
+    public void printCars(String modell, double price) {
+        System.out.println("Bilen: " + modell + " med priset: " + price + "kr");
+    }
+
+    public void printInfo(String modell) {
+       if(modell == null) {
+           System.out.println("Garaget är tomt");
+       }
+       else {
+           System.out.println("Bilen: " + modell + " lades till i garaget");
+       }
     }
 }
